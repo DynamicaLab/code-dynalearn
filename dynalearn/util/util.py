@@ -51,6 +51,7 @@ def sigmoid(x):
 
 
 def from_binary(x):
+    x = np.array(x)
     n = np.arange(x.shape[0])[::-1]
     return (x * 2 ** (n)).sum()
 
@@ -73,6 +74,8 @@ def logbase(x, base=np.e):
 def from_nary(x, axis=0, base=2):
     if type(x) is int or type(x) is float:
         x = np.array([x])
+    else:
+        x = np.array(x)
     n = np.arange(x.shape[axis])[::-1]
     n = n.reshape(*[s if i == axis else 1 for i, s in enumerate(x.shape)])
     return (x * base ** (n)).sum(axis)
@@ -133,45 +136,6 @@ def numba_all_combinations(n, k):
         h += 1
         res.append(a.copy())
     return res
-
-
-@jit(nopython=True)
-def numba_factorial(k):
-    res = 1
-    for i in range(k):
-        res *= i + 1
-    return res
-
-
-@jit(nopython=True)
-def numba_logfactorial(k):
-    res = 0
-    for i in range(k):
-        res += np.log(i + 1)
-    return res
-
-
-@jit(nopython=True)
-def numba_multinomial(k, l, phi):
-    p = numba_factorial(k)
-    for i in range(len(phi)):
-        p *= phi[i] ** l[i] / numba_factorial(l[i])
-    return p
-
-
-def k_l_grid(k_arr, l_arr, s_dim):
-    neigh_array = np.meshgrid(k_arr, *[l_arr] * s_dim)
-    k_grid = neigh_array[0]
-    l_grid = np.zeros((s_dim, len(k_arr), *[len(l_arr)] * s_dim))
-    _l_grid = [neigh_array[i + 1] for i in range(s_dim)]
-
-    ind = np.arange(s_dim + 1)
-    ind[0] = 1
-    ind[1] = 0
-    k_grid = k_grid.transpose(ind)
-    for i in range(s_dim):
-        l_grid[i] = _l_grid[i].transpose(ind)
-    return k_grid, l_grid
 
 
 def onehot(x, num_class=None, dim=-1):

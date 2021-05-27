@@ -3,16 +3,16 @@ from datetime import datetime
 
 
 class Verbose:
-    def __init__(self, filename=None, vtype=0, template=None):
+    def __init__(self, filename=None, vtype=0, pbar=None):
         self.filename = filename
         self.to_file = filename is not None
         self.vtype = vtype
-        if template == "notebook":
-            self.template = tqdm.tqdm_notebook
-        elif template is not None:
-            self.template = template
+        if pbar == "notebook":
+            self.pbar = tqdm.tqdm_notebook
+        elif pbar is not None:
+            self.pbar = pbar
         else:
-            self.template = tqdm.tqdm
+            self.pbar = tqdm.tqdm
         if self.to_file:
             _file = open(self.filename, "w")
             _file.close()
@@ -35,7 +35,7 @@ class Verbose:
     def progress_bar(self, name, num_update):
         if self.vtype == 1:
             self.save_msg(name)
-            return self.template(range(num_update), name)
+            return self.pbar(range(num_update), name)
         else:
             self(name)
             return None
