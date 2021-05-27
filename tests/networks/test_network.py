@@ -1,7 +1,11 @@
 import unittest
-from dynalearn.networks import Network
 import networkx as nx
 import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore")
+
+from dynalearn.networks import Network
 
 
 class NetworkTest(unittest.TestCase):
@@ -44,7 +48,7 @@ class NetworkTest(unittest.TestCase):
         self.network.data = self._generate_network_()
         edge_data = self.network.get_edge_data()
         ref_edge_data = np.concatenate(
-            [self.edge_attr[k].reshape(-1, 1) for k in self.labels], axis=-1
+            [self.network.edge_attr[k].reshape(-1, 1) for k in self.labels], axis=-1
         )
         np.testing.assert_array_equal(ref_edge_data, edge_data)
 

@@ -1,7 +1,11 @@
 import unittest
-from dynalearn.networks import GNPNetworkGenerator
 import networkx as nx
 import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore")
+
+from dynalearn.networks import GNPNetworkGenerator
 from dynalearn.config import NetworkConfig
 
 

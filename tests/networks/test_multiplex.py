@@ -1,7 +1,11 @@
 import unittest
-from dynalearn.networks import MultiplexNetwork
 import networkx as nx
 import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore")
+
+from dynalearn.networks import MultiplexNetwork
 
 
 class MultiplexNetworkTest(unittest.TestCase):
@@ -52,7 +56,8 @@ class MultiplexNetworkTest(unittest.TestCase):
         edge_data = self.network.get_edge_data()
         for l in self.layers:
             ref_edge_data = np.concatenate(
-                [self.edge_attr[l][k].reshape(-1, 1) for k in self.labels], axis=-1
+                [self.network.edge_attr[l][k].reshape(-1, 1) for k in self.labels],
+                axis=-1,
             )
             np.testing.assert_array_equal(ref_edge_data, edge_data[l])
 
