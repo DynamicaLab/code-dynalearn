@@ -15,18 +15,16 @@ class DegreeWeight(Weight):
         )
 
     def _get_features_(self, network, states, pb=None):
-        degree = list(dict(network.degree()).values())
-        for k in degree:
+        for k in network.degree():
             self._add_features_(k)
             if pb is not None:
                 pb.update()
 
     def _get_weights_(self, network, states, pb=None):
-        degree = list(dict(network.degree()).values())
         weights = np.zeros((states.shape[0], states.shape[1]))
 
         z = sum(self.features.values())
-        for i, k in enumerate(degree):
+        for i, k in enumerate(network.degree()):
             weights[:, i] = self.features[k] / z
             if pb is not None:
                 pb.update()
@@ -43,12 +41,11 @@ class StrengthWeight(Weight):
         )
 
     def _get_features_(self, network, states, pb=None):
-        degree = list(dict(network.degree()).values())
-        for i, k in enumerate(degree):
+        for i, k in enumerate(network.degree()):
             self._add_features_(("degree", k))
             for j in network.neighbors(i):
-                if "weight" in network.edges[i, j]:
-                    ew = network.edges[i, j]["weight"]
+                if "weight" in network.data.edges[i, j]:
+                    ew = network.data.edges[i, j]["weight"]
                 else:
                     ew = 1
                 self._add_features_(("weight", k), ew)
@@ -56,7 +53,6 @@ class StrengthWeight(Weight):
                 pb.update()
 
     def _get_weights_(self, network, states, pb=None):
-        degree = list(dict(network.degree()).values())
         weights = np.zeros((states.shape[0], states.shape[1]))
 
         z = 0
@@ -68,11 +64,11 @@ class StrengthWeight(Weight):
                 z += v
             elif k[0] == "weight":
                 kde[k[1]] = KernelDensityEstimator(samples=v)
-        for i, k in enumerate(degree):
+        for i, k in enumerate(network.degree()):
             ew = []
             for j in network.neighbors(i):
-                if "weight" in network.edges[i, j]:
-                    ew.append(network.edges[i, j]["weight"])
+                if "weight" in network.data.edges[i, j]:
+                    ew.append(network.data.edges[i, j]["weight"])
                 else:
                     ew.append(1)
             if k > 0:

@@ -1,6 +1,9 @@
 import networkx as nx
 import numpy as np
 import torch
+import warnings
+
+warnings.filterwarnings("ignore")
 
 from dynalearn.datasets import RemapStateTransform, StateData
 from unittest import TestCase

@@ -1,15 +1,27 @@
 import networkx as nx
 import numpy as np
+import os
 import torch
+import unittest
+import warnings
+
+warnings.filterwarnings("ignore")
 
 from dynalearn.config import ExperimentConfig
+from dynalearn.networks import Network
 from dynalearn.experiments import Experiment
-from unittest import TestCase
+from dynalearn.util import set_edge_attr
 
 
 class TemplateDatasetTest:
+    def get_config(self):
+        raise NotImplemented()
+
+    def get_input_shape(self):
+        raise NotImplemented()
+
     def setUp(self):
-        self.config = ExperimentConfig.test(config="continuous")
+        self.config = self.get_config()  # ExperimentConfig.test(config="continuous")
         self.num_networks = 2
         self.num_samples = 10
         self.num_nodes = 10
@@ -22,8 +34,13 @@ class TemplateDatasetTest:
         self.exp = Experiment(self.config, verbose=0)
         self.dataset = self.exp.dataset
         self.dataset.setup(self.exp)
+        self.lag = self.exp.model.lag
+        self.num_states = self.exp.model.num_states
         data = self.dataset._generate_data_(self.exp.train_details)
         self.dataset.data = data
+
+    def tearDown(self):
+        os.removedirs(f"./{self.exp.name}")
 
     def test_get_indices(self):
         indices = self.dataset.indices
@@ -37,7 +54,7 @@ class TemplateDatasetTest:
             self.assertEqual(weights[i].data.shape, (self.num_samples, self.num_nodes))
 
     def test_partition(self):
-        dataset = self.dataset.partition(0.5)
+        dataset = self.dataset.partition(type="random", fraction=0.5)
         for i in range(self.num_networks):
             np.testing.assert_array_equal(self.dataset.networks[i], dataset.networks[i])
             np.testing.assert_array_equal(
@@ -59,15 +76,9 @@ class TemplateDatasetTest:
             i += 1
         self.assertEqual(self.num_samples * self.num_networks, i)
         (x, g), y, w = data
-        x_ref = np.zeros(
-            (self.num_nodes, self.dataset.num_states, self.dataset.window_size)
-        )
-        y_ref = np.zeros((self.num_nodes, self.dataset.num_states))
-        y_ref[:, 0] = 1
-        w_ref = np.ones(self.num_nodes) / self.num_nodes
-        np.testing.assert_array_almost_equal(x_ref.shape, x.shape)
-        np.testing.assert_array_almost_equal(y_ref.shape, y.shape)
-        np.testing.assert_array_almost_equal(w_ref.shape, w.shape)
+        self.assertEqual(self.get_input_shape(), x.shape)
+        self.assertEqual((self.num_nodes, self.num_states), y.shape)
+        self.assertEqual((self.num_nodes,), w.shape)
 
     def test_batch(self):
         batches = self.dataset.to_batch(self.batch_size)
@@ -77,7 +88,8 @@ class TemplateDatasetTest:
             for bb in b:
                 (x, g), y, w = bb
                 self.assertEqual(type(x), torch.Tensor)
-                self.assertEqual(type(g), nx.Graph)
+                self.assertTrue(issubclass(g.__class__, Network))
+                self.assertTrue(issubclass(g.data.__class__, nx.Graph))
                 self.assertEqual(type(y), torch.Tensor)
                 self.assertEqual(type(w), torch.Tensor)
                 j += 1
@@ -87,5 +99,65 @@ class TemplateDatasetTest:
         self.assertEqual(self.num_samples * self.num_networks, i)
 
 
-if __name__ == "__main__":
-    unittest.main()
+class DiscreteWeightTest:
+    def get_weight(self):
+        raise NotImplemented()
+
+    def get_state(self):
+        return np.random.randint(self.num_states, size=(self.size, self.num_nodes, 1))
+
+    def setUp(self):
+        self.num_nodes = 10
+        self.num_states = 3
+        self.size = 10
+
+        g = nx.barabasi_albert_graph(self.num_nodes, 2)
+        w = np.random.randn(2 * g.number_of_edges())
+        g = set_edge_attr(g, {"weight": w})
+        self.g = Network(data=g)
+        self.state = self.get_state()
+
+    def test_get_features(self):
+        weight = self.get_weight()
+        weight.num_states = self.num_states
+        weight.lag = 1
+        weight._get_features_(self.g, self.state)
+
+    def test_get_weights(self):
+        weight = self.get_weight()
+        weight.num_states = self.num_states
+        weight.lag = 1
+        weight._get_features_(self.g, self.state)
+        w = weight._get_weights_(self.g, self.state)
+        self.assertTrue(np.all(w > 0))
+
+
+class ContinuousWeightTest:
+    def get_weight(self):
+        raise NotImplemented()
+
+    def get_state(self):
+        return (
+            np.random.randn(self.size, self.num_nodes, self.num_states, 1) * 100 + 500
+        )
+
+    def setUp(self):
+        self.num_nodes = 10
+        self.num_states = 3
+        self.size = 10
+
+        g = nx.barabasi_albert_graph(self.num_nodes, 2)
+        w = np.random.randn(2 * g.number_of_edges())
+        g = set_edge_attr(g, {"weight": w})
+        self.g = Network(data=g)
+        self.state = self.get_state()
+
+    def test_get_features(self):
+        weight = self.get_weight()
+        weight._get_features_(self.g, self.state)
+
+    def test_get_weights(self):
+        weight = self.get_weight()
+        weight._get_features_(self.g, self.state)
+        w = weight._get_weights_(self.g, self.state)
+        self.assertTrue(np.all(w > 0))

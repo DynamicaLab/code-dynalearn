@@ -1,8 +1,12 @@
 import unittest
 import numpy as np
+import warnings
+
+warnings.filterwarnings("ignore")
 
 from scipy.stats import gaussian_kde
-from dynalearn.datasets.data import KernelDensityEstimator
+from sklearn.neighbors import KernelDensity
+from dynalearn.datasets.weights import KernelDensityEstimator
 
 
 class KernelDensityEstimatorTest(unittest.TestCase):
@@ -21,38 +25,36 @@ class KernelDensityEstimatorTest(unittest.TestCase):
     def test_mean(self):
         kde = KernelDensityEstimator(self.dataset1)
         mean = np.expand_dims(np.array(self.dataset1).mean(0), axis=-1)
-        np.testing.assert_array_almost_equal(kde.mean, mean)
+        np.testing.assert_array_almost_equal(kde._mean, mean)
 
         kde = KernelDensityEstimator(self.dataset2)
-        self.assertEqual(kde.mean, None)
+        self.assertEqual(kde._mean, None)
 
         kde = KernelDensityEstimator(self.dataset3)
-        self.assertEqual(kde.mean, None)
+        self.assertEqual(kde._mean, None)
 
     def test_std(self):
         kde = KernelDensityEstimator(self.dataset1)
         std = np.expand_dims(np.array(self.dataset1).std(0), axis=-1)
-        np.testing.assert_array_almost_equal(kde.std, std)
+        np.testing.assert_array_almost_equal(kde._std, std)
 
         kde = KernelDensityEstimator(self.dataset2)
-        self.assertEqual(kde.std, None)
+        self.assertEqual(kde._std, None)
 
         kde = KernelDensityEstimator(self.dataset3)
-        self.assertEqual(kde.std, None)
+        self.assertEqual(kde._std, None)
 
     def test_pdf(self):
         index = np.random.randint(len(self.dataset1))
         x = np.array(self.dataset1).reshape(self.num_points, self.shape).T
-        x[index]
         y = (x - np.expand_dims(x.mean(-1), axis=-1)) / np.expand_dims(
             x.std(-1), axis=-1
         )
         my_kde = KernelDensityEstimator(self.dataset1)
-        kde = gaussian_kde(y)
-        p = kde.pdf(y) / kde.pdf(y).sum()
+        kde = KernelDensity(kernel="gaussian").fit(y.T)
+        p = np.exp(kde.score_samples(y.T))
+        p /= p.sum()
         np.testing.assert_array_almost_equal(my_kde.pdf(self.dataset1), p)
-        for i in range(10):
-            p = kde.pdf(x[i])
 
         my_kde = KernelDensityEstimator(self.dataset2)
         np.testing.assert_array_almost_equal(

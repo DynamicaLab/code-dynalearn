@@ -46,7 +46,7 @@ class KernelDensityEstimator:
             y = (x[self._index] - self._mean[self._index]) / self._std[self._index]
             # p = self.kde.pdf(y) / self._norm
             p = np.exp(self.kde.score_samples(y.T)) / self._norm
-            assert p >= 0 and p <= 1, "Encountered invalid value."
+            assert np.all(np.logical_and(p >= 0, p <= 1)), "Encountered invalid value."
             return p
 
     def get_kde(self):

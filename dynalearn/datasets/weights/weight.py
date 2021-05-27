@@ -3,7 +3,7 @@ import numpy as np
 import tqdm
 
 from dynalearn.datasets.data import DataCollection, StateData
-from dynalearn.networks import MultiplexNetwork
+from dynalearn.networks import Network, MultiplexNetwork
 from dynalearn.util import Verbose
 
 
@@ -13,6 +13,18 @@ class Weight(DataCollection):
         self.max_num_samples = max_num_samples
         self.bias = bias
         self.features = {}
+
+    def check_state(self, state):
+        if not isinstance(state, np.ndarray):
+            raise TypeError(
+                f"Invalid type {type(state)} for `state`, expected `np.ndarray`."
+            )
+
+    def check_network(self, network):
+        if not isinstance(network, (Network, MultiplexNetwork)):
+            raise TypeError(
+                f"Invalid type {type(network)} for `network`, expected [`Network`, `MultiplexNetwork`]."
+            )
 
     def _get_features_(self, network, states, pb=None):
         if pb is not None:
@@ -38,19 +50,25 @@ class Weight(DataCollection):
 
     def compute_features(self, dataset, pb=None):
         for i in range(dataset.networks.size):
+            x = dataset.inputs[i].data
             g = dataset.networks[i].data
             if isinstance(g, MultiplexNetwork):
                 g = g.collapse()
-            self._get_features_(g, dataset.inputs[i].data, pb=pb)
+            self.check_network(g)
+            self.check_state(x)
+            self._get_features_(g, x, pb=pb)
         return
 
     def compute_weights(self, dataset, pb=None):
         weights = []
         for i in range(dataset.networks.size):
+            x = dataset.inputs[i].data
             g = dataset.networks[i].data
             if isinstance(g, MultiplexNetwork):
                 g = g.collapse()
-            w = self._get_weights_(g, dataset.inputs[i].data, pb=pb) ** (-self.bias)
+            self.check_network(g)
+            self.check_state(x)
+            w = self._get_weights_(g, x, pb=pb) ** (-self.bias)
             weights = StateData(data=w)
             self.add(weights)
 

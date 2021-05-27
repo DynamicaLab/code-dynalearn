@@ -91,7 +91,7 @@ class Experiment:
                     filename=join(self.path_to_data, "verbose"), vtype=verbose
                 )
             else:
-                self.verbose = Verbose(type=verbose)
+                self.verbose = Verbose(vtype=verbose)
         elif isinstance(verbose, Verbose):
             self.verbose = verbose
 

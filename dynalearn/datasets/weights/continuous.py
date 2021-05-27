@@ -17,6 +17,7 @@ class ContinuousStateWeight(Weight):
         )
 
     def _reduce_node_state_(self, index, states, network):
+
         x = states[index].reshape(-1)
         if self.reduce:
             x = np.array([x.sum()])
