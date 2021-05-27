@@ -47,8 +47,12 @@ class Network:
     def edge_attr(self, edge_attr):
         assert isinstance(edge_attr, dict)
         for k, v in edge_attr.items():
-            assert isinstance(v, np.ndarray)
-            assert len(v) == len(self._edges)
+            if not isinstance(v, np.ndarray):
+                raise TypeError(f"Invalid type `{type(v)}`, expected `np.ndarray`.")
+            if len(v) != len(self._edges):
+                raise RuntimeError(
+                    f"Invalid size {len(v)}, expected {len(self._edges)}."
+                )
             self._edge_attr[k] = v
             v_dict = {(n, m): v[i] for i, (n, m) in enumerate(self.edges)}
             nx.set_edge_attributes(self._data, v_dict, name=k)

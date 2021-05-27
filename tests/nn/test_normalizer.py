@@ -1,7 +1,4 @@
-import networkx as nx
-import numpy as np
-import torch
-import unittest
+from templates import *
 from dynalearn.nn.transformers import (
     InputNormalizer,
     TargetNormalizer,
@@ -9,7 +6,7 @@ from dynalearn.nn.transformers import (
     EdgeNormalizer,
     NetworkNormalizer,
 )
-from dynalearn.utilities import get_node_attr, get_edge_attr
+from dynalearn.util import get_node_attr, get_edge_attr
 from dynalearn.config import NetworkConfig
 from dynalearn.networks.getter import get as get_network
 
@@ -22,6 +19,8 @@ class InputNormalizerTest(unittest.TestCase):
         self.normalizer = InputNormalizer(self.num_states)
         self.normalizer.inputs_mean = self.mean
         self.normalizer.inputs_var = self.var
+        if torch.cuda.is_available():
+            self.normalizer.cuda()
 
     def test_forwardbackward(self):
         n = 10
@@ -43,6 +42,8 @@ class TargetNormalizerTest(unittest.TestCase):
         self.normalizer = TargetNormalizer(self.num_states)
         self.normalizer.targets_mean = self.mean
         self.normalizer.targets_var = self.var
+        if torch.cuda.is_available():
+            self.normalizer.cuda()
 
     def test_forwardbackward(self):
         n = 10
@@ -63,6 +64,8 @@ class NodeNormalizerTest(unittest.TestCase):
         self.normalizer = NodeNormalizer(self.num_attr)
         self.normalizer.nodeattr_mean = self.mean
         self.normalizer.nodeattr_var = self.var
+        if torch.cuda.is_available():
+            self.normalizer.cuda()
 
     def test_forwardbackward(self):
         g = nx.gnp_random_graph(10, 0.5)
@@ -89,6 +92,8 @@ class EdgeNormalizerTest(unittest.TestCase):
         self.normalizer = EdgeNormalizer(self.num_attr)
         self.normalizer.edgeattr_mean = self.mean
         self.normalizer.edgeattr_var = self.var
+        if torch.cuda.is_available():
+            self.normalizer.cuda()
 
     def test_forwardbackward(self):
         g = nx.gnp_random_graph(10, 0.5)
@@ -124,7 +129,9 @@ class NetworkNormalizerTest(unittest.TestCase):
         self.normalizer.edgeattr_var = self.edge_var
 
         self.num_nodes = 10
-        self.network = get_network(NetworkConfig.barabasialbert(self.num_nodes, 2))
+        self.network = get_network(NetworkConfig.ba(self.num_nodes, 2))
+        if torch.cuda.is_available():
+            self.normalizer.cuda()
 
     def test_forward(self):
         g = self.network.generate()
@@ -146,7 +153,8 @@ class NetworkNormalizerTest(unittest.TestCase):
         _g = self.normalizer.forward(g)
         self.assertTrue(isinstance(_g, tuple))
         self.assertTrue(len(_g) == 3)
-        self.assertTrue(_g[0].shape == (2, M))
+        self.assertTrue(_g[0].shape == (2, 2 * M))
+
         if self.edge_size > 0:
             self.assertTrue(_g[1].shape == (M, self.edge_size))
         else:

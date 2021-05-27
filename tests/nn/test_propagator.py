@@ -1,9 +1,6 @@
-import networkx as nx
-import numpy as np
-import torch
-import unittest
+from templates import *
 from dynalearn.nn.models import Propagator
-from dynalearn.utilities import to_edge_index
+from dynalearn.util import to_edge_index
 
 
 class PropagatorTest(unittest.TestCase):

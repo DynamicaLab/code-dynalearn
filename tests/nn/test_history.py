@@ -1,6 +1,5 @@
+from templates import *
 from dynalearn.nn import History
-import unittest
-import numpy as np
 
 
 class HistoryTest(unittest.TestCase):
