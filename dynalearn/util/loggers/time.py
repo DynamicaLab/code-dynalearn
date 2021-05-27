@@ -11,8 +11,9 @@ class TimeLogger(Logger):
         self.end = None
 
     def on_task_begin(self):
+
         self.begin = datetime.now()
-        self.update = self.begin
+        self.update = datetime.now()
         self.log["begin"] = self.begin.strftime("%Y-%m-%d %H:%M:%S")
 
     def on_task_end(self):

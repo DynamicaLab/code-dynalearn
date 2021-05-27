@@ -18,7 +18,12 @@ class MemoryLogger(Logger):
             raise ValueError(
                 f"`{unit}` is an invalid unit, valid units are `[b, kb, mb, gb]`"
             )
+
         Logger.__init__(self)
+
+    def on_task_begin(self):
+        memory_usage = round(psutil.virtual_memory().used / self.factor, 4)
+        self.log["memory-begin"] = memory_usage
 
     def on_task_end(self):
         self.log["min"] = min(self.all)
@@ -37,5 +42,6 @@ class MemoryLogger(Logger):
         _all = []
         for k, v in self.log.items():
             if k[:6] == "memory":
+                v = [v] if not isinstance(v, list) else v
                 _all.extend(v)
         return _all
