@@ -8,6 +8,10 @@ class ExperimentTest(unittest.TestCase):
     def setUp(self):
         self.config = ExperimentConfig.test()
         self.experiment = Experiment(self.config, verbose=0)
+        self.experiment.begin()
+
+    def tearDown(self):
+        self.experiment.end()
 
     def test_generate(self):
         self.experiment.generate_data()

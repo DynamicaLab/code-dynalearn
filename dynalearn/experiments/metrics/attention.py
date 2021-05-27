@@ -14,10 +14,7 @@ from .util.mutual_info import mutual_info
 class AttentionMetrics(Metrics):
     def __init__(self, config):
         Metrics.__init__(self, config)
-        p = config.__dict__.copy()
-        self.max_num_points = p.pop("att_max_num_points", 100)
-        if self.max_num_points == -1:
-            self.max_num_points = np.inf
+        self.max_num_points = config.attention.get("max_num_points", 100)
         self.indices = {}
 
     def initialize(self, experiment):

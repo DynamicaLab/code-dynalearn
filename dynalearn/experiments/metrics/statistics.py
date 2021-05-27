@@ -12,9 +12,9 @@ from dynalearn.util import from_nary
 class StatisticsMetrics(Metrics):
     def __init__(self, config):
         Metrics.__init__(self, config)
-        self.max_num_sample = config.max_num_sample
-        self.max_num_points = config.max_num_points
-        self.max_lag = config.max_lag
+        self.max_num_sample = config.statistics.get("max_num_sample", np.inf)
+        self.max_num_points = config.statistics.get("max_num_points", np.inf)
+        self.max_lag = config.statistics.get("max_lag", np.inf)
 
         self.dataset = None
         self.all_nodes = {}

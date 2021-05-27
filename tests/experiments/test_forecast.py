@@ -1,28 +1,17 @@
 import unittest
-import numpy as np
-from dynalearn.config import ExperimentConfig
-from dynalearn.experiments import Experiment
+from templates import *
 
 
-class TrueForecastMetricsTest(unittest.TestCase):
+class TrueForecastMetricsTest(MetricsTest, unittest.TestCase):
     @property
     def name(self):
         return "TrueForecastMetrics"
 
-    def setUp(self):
-        self.config = ExperimentConfig.metapop("test", "dsir", "w_ba")
+    def additional_configs(self):
+        self.config = ExperimentConfig.test(config="continuous")
         self.config.networks.num_nodes = 10
         self.config.train_details.num_samples = 10
         self.config.train_details.num_networks = 1
-        self.config.metrics.names = [self.name]
-        self.config.metrics.num_steps = [1, 7, 14]
-        self.exp = Experiment(self.config)
-        self.exp.generate_data()
-        self.exp.partition_test_dataset()
-        self.exp.partition_val_dataset()
-
-    def test_compute(self):
-        self.exp.metrics[self.name].compute(self.exp)
 
 
 class GNNForecastMetricsTest(TrueForecastMetricsTest):

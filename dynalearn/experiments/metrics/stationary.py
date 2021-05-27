@@ -12,14 +12,12 @@ from .util import Initializer, ModelSampler, Statistics
 class StationaryStateMetrics(Metrics):
     def __init__(self, config):
         Metrics.__init__(self, config)
-        if "parameters" in config.__dict__:
-            self.parameters = config.parameters
-        else:
-            self.parameters = None
-        self.num_samples = config.num_samples
-        self.initializer = Initializer(self.config)
-        self.sampler = ModelSampler.getter(self.config)
-        self.statistics = Statistics.getter(self.config)
+        self.num_samples = config.stationary.get("num_samples", 10)
+        self.parameters = config.stationary.get("parameters")
+        self.init_param = config.stationary.get("init_param", [])
+        self.initializer = Initializer(self.config.stationary)
+        self.sampler = ModelSampler.getter(self.config.stationary)
+        self.statistics = Statistics.getter(self.config.stationary)
 
         self.dynamics = None
         self.networks = None
@@ -48,7 +46,7 @@ class StationaryStateMetrics(Metrics):
                 factor += len(p)
                 self.data[f"param-{k}"] = p
         else:
-            factor = len(self.config.init_param)
+            factor = len(self.init_param)
         self.num_updates = self.num_samples * factor
 
         for m in self.initializer.all_modes:
@@ -133,7 +131,7 @@ class GNNPSSMetrics(GNNSSMetrics, PoissonSSMetrics):
 class ErdosRenyiSSMetrics(StationaryStateMetrics):
     def __init__(self, config):
         StationaryStateMetrics.__init__(self, config)
-        self.num_nodes = config.num_nodes
+        self.num_nodes = self.config.stationary.get("num_nodes", 1000)
 
     def get_networks(self, experiment):
         m = 4.0 * self.num_nodes / 2

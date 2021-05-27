@@ -10,7 +10,7 @@ from dynalearn.networks import Network, MultiplexNetwork
 class PredictionMetrics(Metrics):
     def __init__(self, config):
         Metrics.__init__(self, config)
-        self.max_num_points = config.pred_max_num_points
+        self.max_num_points = config.prediction.get("max_num_points", np.inf)
         self.model = None
         self.names = [
             "true",
