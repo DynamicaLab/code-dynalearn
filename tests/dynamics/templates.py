@@ -1,11 +1,10 @@
 import numpy as np
-import warnings
 import time
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import NetworkConfig
 from dynalearn.networks.getter import get as get_network
+
+NUM_SAMPLES = 10
 
 
 class StoContTemplateTest:
@@ -38,11 +37,14 @@ class StoContTemplateTest:
         np.testing.assert_array_almost_equal(y.sum(-1), np.ones(self.num_nodes))
 
     def test_sample(self):
+        success = 0
         x = np.zeros(self.num_nodes)
         self.assertTrue(np.all(x == self.model.sample(x)))
-        x = np.random.randint(self.num_states, size=self.num_nodes)
-        y = self.model.sample(x)
-        self.assertTrue(np.any(x != y))
+        for i in range(NUM_SAMPLES):
+            x = np.random.randint(self.num_states, size=self.num_nodes)
+            y = self.model.sample(x)
+            success += int(np.any(x != y))
+        self.assertGreater(success, 0)
 
     def test_initialstate(self):
         x = self.model.initial_state()

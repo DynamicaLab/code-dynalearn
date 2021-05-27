@@ -1,11 +1,8 @@
 import unittest
-import warnings
 import os
 
-warnings.filterwarnings("ignore")
-
 from dynalearn.config import ExperimentConfig
-from templates import TemplateConfigTest
+from .templates import TemplateConfigTest
 
 EXP_ATTRIBUTES = [
     "path_to_data",

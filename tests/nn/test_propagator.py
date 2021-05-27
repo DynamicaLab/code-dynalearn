@@ -1,4 +1,8 @@
-from templates import *
+import networkx as nx
+import numpy as np
+import torch
+import unittest
+
 from dynalearn.nn.models import Propagator
 from dynalearn.util import to_edge_index
 

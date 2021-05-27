@@ -1,8 +1,5 @@
 import os
 import unittest
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.util import Verbose
 

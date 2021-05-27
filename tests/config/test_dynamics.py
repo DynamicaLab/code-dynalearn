@@ -1,24 +1,27 @@
 import unittest
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import DynamicsConfig
-from templates import TemplateConfigTest
+from .templates import TemplateConfigTest
 
 
 class SISConfigTest(TemplateConfigTest, unittest.TestCase):
     def setUp(self):
         self.config = DynamicsConfig.sis()
         self.name = "SIS"
-        self.attributes = ["infection", "recovery", "init_param"]
+        self.attributes = [
+            "infection",
+            "recovery",
+        ]
 
 
 class PlanckSISConfigTest(TemplateConfigTest, unittest.TestCase):
     def setUp(self):
         self.config = DynamicsConfig.plancksis()
         self.name = "PlanckSIS"
-        self.attributes = ["temperature", "recovery", "init_param"]
+        self.attributes = [
+            "temperature",
+            "recovery",
+        ]
 
 
 class SISSISConfigTest(TemplateConfigTest, unittest.TestCase):
@@ -32,7 +35,6 @@ class SISSISConfigTest(TemplateConfigTest, unittest.TestCase):
             "recovery2",
             "coupling",
             "boost",
-            "init_param",
         ]
 
 
@@ -45,7 +47,6 @@ class DSIRConfigTest(TemplateConfigTest, unittest.TestCase):
             "recovery_prob",
             "infection_type",
             "density",
-            "init_param",
         ]
 
 
@@ -58,7 +59,6 @@ class DSIRConfigTest(TemplateConfigTest, unittest.TestCase):
             "recovery_prob",
             "infection_type",
             "density",
-            "init_param",
         ]
 
 

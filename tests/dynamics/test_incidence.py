@@ -4,7 +4,7 @@ import torch
 import time
 import unittest
 
-from templates import *
+from .templates import *
 from dynalearn.dynamics import IncSIR
 from dynalearn.config import DynamicsConfig, NetworkConfig
 from dynalearn.networks.getter import get as get_network

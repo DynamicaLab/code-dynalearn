@@ -3,7 +3,7 @@ from .config import Config
 
 class DiscreteDatasetConfig(Config):
     @classmethod
-    def get(cls, weight_type="state", **kwargs):
+    def get_config(cls, weight_type="state", **kwargs):
         return getattr(cls, weight_type)(**kwargs)
 
     @classmethod
@@ -42,7 +42,7 @@ class DiscreteDatasetConfig(Config):
 
 class ContinuousDatasetConfig(Config):
     @classmethod
-    def get(cls, weight_type="state", **kwargs):
+    def get_config(cls, weight_type="state", **kwargs):
         return getattr(cls, weight_type)(**kwargs)
 
     @classmethod

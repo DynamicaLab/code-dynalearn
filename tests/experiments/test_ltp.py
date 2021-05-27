@@ -1,5 +1,5 @@
 import unittest
-from templates import *
+from .templates import *
 
 
 class TrueLTPMetricsTest(MetricsTest, unittest.TestCase):

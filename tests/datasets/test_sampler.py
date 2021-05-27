@@ -1,5 +1,7 @@
+import os
+
 from shutil import rmtree
-from templates import *
+from .templates import *
 from dynalearn.config import ExperimentConfig
 from dynalearn.experiments import Experiment
 
@@ -16,7 +18,8 @@ class SamplerTest(unittest.TestCase):
         self.sampler = self.dataset.sampler
 
     def tearDown(self):
-        rmtree("./test")
+        if os.path.exists("./test"):
+            rmtree("./test")
 
     def test_call(self):
         for i in range(NUM_SAMPLES):

@@ -1,4 +1,8 @@
-from templates import *
+import networkx as nx
+import numpy as np
+import torch
+import unittest
+
 from dynalearn.nn.models import GraphNeuralNetwork
 from dynalearn.config import TrainableConfig, NetworkConfig
 from dynalearn.networks.getter import get as get_network

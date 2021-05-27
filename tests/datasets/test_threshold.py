@@ -1,9 +1,6 @@
 import networkx as nx
 import numpy as np
 import torch
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import NetworkConfig
 from dynalearn.datasets import ThresholdNetworkTransform, NetworkData

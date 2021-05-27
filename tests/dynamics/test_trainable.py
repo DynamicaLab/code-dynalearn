@@ -2,7 +2,7 @@ import unittest
 import networkx as nx
 import numpy as np
 
-from templates import *
+from .templates import *
 from dynalearn.dynamics import GNNSEDynamics, GNNDEDynamics, GNNIncidenceDynamics
 from dynalearn.config import TrainableConfig, NetworkConfig
 from torch_geometric.nn.inits import ones

@@ -1,10 +1,6 @@
 import unittest
 import numpy as np
 import torch
-import warnings
-
-warnings.filterwarnings("ignore")
-
 from dynalearn.util import *
 
 

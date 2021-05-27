@@ -1,10 +1,7 @@
 import unittest
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import TrainableConfig
-from templates import TemplateConfigTest
+from .templates import TemplateConfigTest
 
 GNN_ATTRIBUTES = [
     "gnn_name",

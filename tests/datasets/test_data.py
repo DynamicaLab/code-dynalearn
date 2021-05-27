@@ -1,7 +1,4 @@
 import numpy as np
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from unittest import TestCase
 from dynalearn.datasets import DataCollection, StateData

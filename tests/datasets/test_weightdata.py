@@ -1,6 +1,6 @@
 import unittest
 
-from templates import DiscreteWeightTest, ContinuousWeightTest
+from .templates import DiscreteWeightTest, ContinuousWeightTest
 from dynalearn.datasets.weights import (
     Weight,
     DegreeWeight,

@@ -50,7 +50,7 @@ class StationaryConfig(Config):
             "absorbing": np.array([1 - epsilon, epsilon]),
             "epidemic": np.array([0, 1]),
         }
-        param = np.linspace(0.1, 10.0, 10)
+        param = np.linspace(0.1, 10.0, 2)
         cls.parameters = {"absorbing": param, "epidemic": param[::-1]}
         cls.num_samples = 1
         return cls

@@ -1,8 +1,6 @@
 import numpy as np
+import os
 import torch
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from shutil import rmtree
 from dynalearn.config import ExperimentConfig
@@ -27,7 +25,8 @@ class MetricsTest:
         self.exp.partition_val_dataset()
 
     def tearDown(self):
-        rmtree("./test")
+        if os.path.exists("./test"):
+            rmtree("./test")
 
     def check_data(selt, data):
         pass

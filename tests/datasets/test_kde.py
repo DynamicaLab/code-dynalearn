@@ -1,8 +1,5 @@
 import unittest
 import numpy as np
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from scipy.stats import gaussian_kde
 from sklearn.neighbors import KernelDensity

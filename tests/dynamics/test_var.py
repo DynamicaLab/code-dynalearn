@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from templates import *
+from .templates import *
 from dynalearn.dynamics import VARDynamics
 from statsmodels.tsa.vector_ar.var_model import VAR
 

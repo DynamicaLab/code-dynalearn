@@ -1,10 +1,7 @@
 import unittest
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import NetworkConfig
-from templates import TemplateConfigTest
+from .templates import TemplateConfigTest
 
 
 class GNPConfigTest(TemplateConfigTest, unittest.TestCase):

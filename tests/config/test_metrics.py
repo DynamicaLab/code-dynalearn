@@ -1,10 +1,6 @@
 import unittest
-import sys
-import warnings
 
-warnings.filterwarnings("ignore")
-sys.path.append("../")
-
+from .templates import TemplateConfigTest
 from dynalearn.config.util import (
     AttentionConfig,
     ForecastConfig,
@@ -13,7 +9,6 @@ from dynalearn.config.util import (
     StationaryConfig,
     StatisticsConfig,
 )
-from templates import TemplateConfigTest
 
 
 class AttentionConfigTest(TemplateConfigTest, unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from templates import *
+from .templates import *
 from dynalearn.config.util import StationaryConfig
 
 

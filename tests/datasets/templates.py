@@ -3,9 +3,6 @@ import numpy as np
 import os
 import torch
 import unittest
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import ExperimentConfig
 from dynalearn.networks import Network
@@ -38,9 +35,6 @@ class TemplateDatasetTest:
         self.num_states = self.exp.model.num_states
         data = self.dataset._generate_data_(self.exp.train_details)
         self.dataset.data = data
-
-    def tearDown(self):
-        os.remove(f"./{self.exp.name}")
 
     def test_get_indices(self):
         indices = self.dataset.indices

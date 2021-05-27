@@ -1,10 +1,7 @@
 import unittest
-import warnings
-
-warnings.filterwarnings("ignore")
 
 from dynalearn.config import DiscreteDatasetConfig, ContinuousDatasetConfig
-from templates import TemplateConfigTest
+from .templates import TemplateConfigTest
 
 
 class DiscretePlainDatasetConfigTest(TemplateConfigTest, unittest.TestCase):

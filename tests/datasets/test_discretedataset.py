@@ -2,11 +2,8 @@ import networkx as nx
 import numpy as np
 import torch
 import unittest
-import warnings
 
-warnings.filterwarnings("ignore")
-
-from templates import TemplateDatasetTest
+from .templates import TemplateDatasetTest
 from dynalearn.config import ExperimentConfig
 from dynalearn.experiments import Experiment
 

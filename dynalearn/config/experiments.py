@@ -91,12 +91,12 @@ class ExperimentConfig(Config):
             cls.dynamics.is_multiplex = False
             cls.model.is_multiplex = False
         if dynamics == "dsir":
-            cls.dataset = ContinuousDatasetConfig.get(
+            cls.dataset = ContinuousDatasetConfig.get_config(
                 weight_type, compounded=False, reduce=False, total=True
             )
             cls.train_details = TrainingConfig.continuous()
         elif dynamics in ["sis", "plancksis", "sissis"]:
-            cls.dataset = DiscreteDatasetConfig.get(weight_type)
+            cls.dataset = DiscreteDatasetConfig.get_config(weight_type)
             cls.train_details = TrainingConfig.discrete()
         else:
             raise RuntimeError(f"Invalid model value {dynamics}.")

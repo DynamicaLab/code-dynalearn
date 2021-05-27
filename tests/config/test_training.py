@@ -1,12 +1,7 @@
 import unittest
-import sys
-import warnings
-
-warnings.filterwarnings("ignore")
-sys.path.append("../")
 
 from dynalearn.config.util import TrainingConfig
-from templates import TemplateConfigTest
+from .templates import TemplateConfigTest
 
 TRAIN_ATTRIBUTES = [
     "val_fraction",
