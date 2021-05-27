@@ -25,6 +25,7 @@ def get_unkown_args(l):
     c_type = list
     for ll in l:
         if ll[:2] == "--":
+
             if k is not None:
                 d[k] = c_type(d[k])
             k = ll[2:]
@@ -172,6 +173,13 @@ parser.add_argument(
     default=0,
 )
 parser.add_argument(
+    "--weight_type",
+    type=str,
+    metavar="WEIGHT_TYPES",
+    help="Type of weight for dataset.",
+    default="state",
+)
+parser.add_argument(
     "--seed",
     type=int,
     metavar="VERBOSE",
@@ -191,13 +199,12 @@ config = ExperimentConfig.default(
     path_to_best=args.path_to_best,
     path_to_summary=args.path_to_summary,
     seed=args.seed,
+    weight_type=args.weight_type,
 )
-config.metrics.names = tuple(args.metrics)
+config.metrics.names = get_metrics(args)
 for k, v in others.__dict__.items():
     if k in config.state_dict:
         config[k] = v
 
-print(config)
-
-# exp = Experiment(config, verbose=args.verbose)
-# exp.run()
+exp = Experiment(config, verbose=args.verbose)
+exp.run()

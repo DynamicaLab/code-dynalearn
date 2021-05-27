@@ -1,0 +1,46 @@
+import os
+import json
+
+from dynalearn.utilities import launch_scan
+
+name = "exp"
+specs = json.load(open("./specs.json", "r"))
+config = {
+    "name": name,
+    "path_to_covid": specs["path_to_data"],
+    "epochs": 200,
+<<<<<<< HEAD
+    "type": ["linear"],
+#    "model": ["DynamicsGATConv", "FullyConnectedGNN", "IndependentGNN"],
+    "model": ["KapoorConv"],
+    "lag": [7],
+    "bias": [0.],
+    "val_fraction": 0.3,
+=======
+    "type": ["rnn"],
+    "model": [
+        # "DynamicsGATConv",
+        # "FullyConnectedGNN",
+        # "IndependentGNN",
+        "KapoorConv",
+    ],
+    "lag": [5],
+    "bias": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "val_fraction": 0.1,
+>>>>>>> f92ba84c91530f60c34304f7dbbf7eb2d3a44c9e
+    "incidence": 1,
+}
+launch_scan(
+    name,
+    os.path.join(specs["path_to_data"], "covid"),
+    os.path.join(specs["path_to_script"], "covid_script.py"),
+    command=specs["command"],
+    time="15:00:00",
+    memory="8G",
+    account=specs["account"],
+    modules_to_load=specs["modules_to_load"],
+    source_path=specs["source_path"],
+    config=config,
+    devices=specs["devices"],
+    verbose=2,
+)
