@@ -234,15 +234,15 @@ class ExperimentConfig(Config):
         cls.path_to_summary = path_to_summary
         if not os.path.exists(path_to_summary):
             os.makedirs(path_to_summary)
-
+        num_nodes = 10
         if config == "discrete":
             cls.dataset = DiscreteDatasetConfig.state()
-            cls.networks = NetworkConfig.gnp(1000, 4.0 / 999.0)
+            cls.networks = NetworkConfig.ba(num_nodes, 2)
             cls.dynamics = DynamicsConfig.sis()
             cls.model = TrainableConfig.sis()
         elif config == "continuous":
             cls.dataset = ContinuousDatasetConfig.state()
-            cls.networks = NetworkConfig.w_gnp(1000, 4.0 / 999.0)
+            cls.networks = NetworkConfig.w_ba(num_nodes, 2)
             cls.dynamics = DynamicsConfig.dsir()
             cls.model = TrainableConfig.dsir()
         cls.train_details = TrainingConfig.test()

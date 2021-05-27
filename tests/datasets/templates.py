@@ -40,7 +40,7 @@ class TemplateDatasetTest:
         self.dataset.data = data
 
     def tearDown(self):
-        os.removedirs(f"./{self.exp.name}")
+        os.remove(f"./{self.exp.name}")
 
     def test_get_indices(self):
         indices = self.dataset.indices
