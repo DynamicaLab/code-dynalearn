@@ -43,13 +43,15 @@ class StationaryConfig(Config):
     def test(cls):
         cls = cls.stocont()
         epsilon = 1e-3
+        cls.T = 100
+        cls.tol = 5
         cls.init_epsilon = 1e-3
         cls.init_param = {
             "absorbing": np.array([1 - epsilon, epsilon]),
             "epidemic": np.array([0, 1]),
         }
         param = np.linspace(0.1, 10.0, 10)
-        cls.parameters = {"absorbing": param, "epidemics": param[::-1]}
+        cls.parameters = {"absorbing": param, "epidemic": param[::-1]}
         cls.num_samples = 1
         return cls
 

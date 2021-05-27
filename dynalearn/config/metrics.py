@@ -2,6 +2,7 @@ import numpy as np
 from itertools import product
 from .config import Config
 from .util import (
+    AttentionConfig,
     ForecastConfig,
     LTPConfig,
     PredictionConfig,
@@ -15,11 +16,12 @@ class MetricsConfig(Config):
     def test(cls):
         cls = cls()
         cls.names = []
-        cls.merge(LTPConfig.default())
-        cls.merge(PredictionConfig.default())
-        cls.merge(StatisticsConfig.default())
-        cls.merge(StationaryConfig.test())
-        cls.merge(ForecastConfig.default())
+        cls.ltp = LTPConfig.default()
+        cls.prediction = PredictionConfig.default()
+        cls.statistics = StatisticsConfig.default()
+        cls.stationary = StationaryConfig.test()
+        cls.forecast = ForecastConfig.default()
+        cls.attention = AttentionConfig.default()
 
         return cls
 
@@ -27,10 +29,11 @@ class MetricsConfig(Config):
     def sis(cls):
         cls = cls()
         cls.names = []
-        cls.merge(LTPConfig.default())
-        cls.merge(PredictionConfig.default())
-        cls.merge(StatisticsConfig.default())
-        cls.merge(StationaryConfig.sis())
+        cls.ltp = LTPConfig.default()
+        cls.prediciton = PredictionConfig.default()
+        cls.statistics = StatisticsConfig.default()
+        cls.stationary = StationaryConfig.sis()
+        cls.attention = AttentionConfig.default()
 
         return cls
 
@@ -38,10 +41,11 @@ class MetricsConfig(Config):
     def plancksis(cls):
         cls = cls()
         cls.names = []
-        cls.merge(LTPConfig.default())
-        cls.merge(PredictionConfig.default())
-        cls.merge(StatisticsConfig.default())
-        cls.merge(StationaryConfig.plancksis())
+        cls.ltp = LTPConfig.default()
+        cls.prediciton = PredictionConfig.default()
+        cls.statistics = StatisticsConfig.default()
+        cls.stationary = StationaryConfig.plancksis()
+        cls.attention = AttentionConfig.default()
 
         return cls
 
@@ -49,10 +53,11 @@ class MetricsConfig(Config):
     def sissis(cls):
         cls = cls()
         cls.names = []
-        cls.merge(LTPConfig.default())
-        cls.merge(PredictionConfig.default())
-        cls.merge(StatisticsConfig.default())
-        cls.merge(StationaryConfig.sissis())
+        cls.ltp = LTPConfig.default()
+        cls.prediciton = PredictionConfig.default()
+        cls.statistics = StatisticsConfig.default()
+        cls.stationary = StationaryConfig.sissis()
+        cls.attention = AttentionConfig.default()
 
         return cls
 
@@ -60,9 +65,10 @@ class MetricsConfig(Config):
     def dsir(cls):
         cls = cls()
         cls.names = []
-        cls.merge(PredictionConfig.default())
-        cls.merge(StationaryConfig.dsir())
-        cls.merge(ForecastConfig.default())
+        cls.prediction = PredictionConfig.default()
+        cls.forecast = ForecastConfig.default()
+        cls.stationary = StationaryConfig.dsir()
+        cls.attention = AttentionConfig.default()
 
         return cls
 
@@ -70,7 +76,8 @@ class MetricsConfig(Config):
     def covid(cls):
         cls = cls()
         cls.names = []
-        cls.merge(PredictionConfig.default())
-        cls.merge(ForecastConfig.default())
+        cls.prediction = PredictionConfig.default()
+        cls.forecast = ForecastConfig.default()
+        cls.attention = AttentionConfig.default()
 
         return cls

@@ -49,6 +49,7 @@ class ExperimentConfig(Config):
         path_to_data="./",
         path_to_best="./",
         path_to_summary="./",
+        weight_type="state",
         seed=None,
     ):
         cls = cls()
@@ -89,7 +90,16 @@ class ExperimentConfig(Config):
         else:
             cls.dynamics.is_multiplex = False
             cls.model.is_multiplex = False
-
+        if dynamics == "dsir":
+            cls.dataset = ContinuousDatasetConfig.get(
+                weight_type, compounded=False, reduce=False, total=True
+            )
+            cls.train_details = TrainingConfig.continuous()
+        elif dynamics in ["sis", "plancksis", "sissis"]:
+            cls.dataset = DiscreteDatasetConfig.get(weight_type)
+            cls.train_details = TrainingConfig.discrete()
+        else:
+            raise RuntimeError(f"Invalid model value {dynamics}.")
         cls.metrics = metrics_config[dynamics]
         cls.train_metrics = trainingmetrics[dynamics]
         cls.callbacks = CallbackConfig.default(cls.path_to_best)
@@ -101,57 +111,57 @@ class ExperimentConfig(Config):
 
         return cls
 
-    @classmethod
-    def stocont(
-        cls,
-        name,
-        dynamics,
-        network,
-        path_to_data="./",
-        path_to_best="./",
-        path_to_summary="./",
-        seed=None,
-    ):
-        cls = cls.default(
-            name,
-            dynamics,
-            network,
-            path_to_data=path_to_data,
-            path_to_best=path_to_best,
-            path_to_summary=path_to_summary,
-            seed=seed,
-        )
-        cls.dataset = DiscreteDatasetConfig.state()
-        cls.train_details = TrainingConfig.discrete()
-
-        return cls
-
-    @classmethod
-    def metapop(
-        cls,
-        name,
-        dynamics,
-        network,
-        path_to_data="./",
-        path_to_best="./",
-        path_to_summary="./",
-        seed=None,
-    ):
-        cls = cls.default(
-            name,
-            dynamics,
-            network,
-            path_to_data=path_to_data,
-            path_to_best=path_to_best,
-            path_to_summary=path_to_summary,
-            seed=seed,
-        )
-        cls.dataset = ContinuousDatasetConfig.state(
-            compounded=False, reduce=False, total=True
-        )
-        cls.train_details = TrainingConfig.continuous()
-
-        return cls
+    # @classmethod
+    # def stocont(
+    #     cls,
+    #     name,
+    #     dynamics,
+    #     network,
+    #     path_to_data="./",
+    #     path_to_best="./",
+    #     path_to_summary="./",
+    #     seed=None,
+    # ):
+    #     cls = cls.default(
+    #         name,
+    #         dynamics,
+    #         network,
+    #         path_to_data=path_to_data,
+    #         path_to_best=path_to_best,
+    #         path_to_summary=path_to_summary,
+    #         seed=seed,
+    #     )
+    #     cls.dataset = DiscreteDatasetConfig.state()
+    #     cls.train_details = TrainingConfig.discrete()
+    #
+    #     return cls
+    #
+    # @classmethod
+    # def metapop(
+    #     cls,
+    #     name,
+    #     dynamics,
+    #     network,
+    #     path_to_data="./",
+    #     path_to_best="./",
+    #     path_to_summary="./",
+    #     seed=None,
+    # ):
+    #     cls = cls.default(
+    #         name,
+    #         dynamics,
+    #         network,
+    #         path_to_data=path_to_data,
+    #         path_to_best=path_to_best,
+    #         path_to_summary=path_to_summary,
+    #         seed=seed,
+    #     )
+    #     cls.dataset = ContinuousDatasetConfig.state(
+    #         compounded=False, reduce=False, total=True
+    #     )
+    #     cls.train_details = TrainingConfig.continuous()
+    #
+    #     return cls
 
     @classmethod
     def covid(
@@ -240,11 +250,15 @@ class ExperimentConfig(Config):
             cls.networks = NetworkConfig.ba(num_nodes, 2)
             cls.dynamics = DynamicsConfig.sis()
             cls.model = TrainableConfig.sis()
+            cls.model.is_weighted = False
+            cls.model.is_multiplex = False
         elif config == "continuous":
             cls.dataset = ContinuousDatasetConfig.state()
             cls.networks = NetworkConfig.w_ba(num_nodes, 2)
             cls.dynamics = DynamicsConfig.dsir()
             cls.model = TrainableConfig.dsir()
+            cls.model.is_weighted = True
+            cls.model.is_multiplex = False
         cls.train_details = TrainingConfig.test()
         cls.metrics = MetricsConfig.test()
         cls.train_metrics = []

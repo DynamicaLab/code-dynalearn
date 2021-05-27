@@ -3,7 +3,11 @@ from .config import Config
 
 class DiscreteDatasetConfig(Config):
     @classmethod
-    def plain(cls):
+    def get(cls, weight_type="state", **kwargs):
+        return getattr(cls, weight_type)(**kwargs)
+
+    @classmethod
+    def plain(cls, **kwargs):
         cls = cls()
         cls.name = "DiscreteDataset"
         cls.modes = ["main"]
@@ -13,7 +17,7 @@ class DiscreteDatasetConfig(Config):
         return cls
 
     @classmethod
-    def structure(cls, use_strength=True):
+    def structure(cls, use_strength=True, **kwargs):
         cls = cls()
         cls.name = "DiscreteStructureWeightDataset"
         cls.modes = ["main"]
@@ -24,7 +28,7 @@ class DiscreteDatasetConfig(Config):
         return cls
 
     @classmethod
-    def state(cls, use_strength=True, compounded=True):
+    def state(cls, use_strength=True, compounded=True, **kwargs):
         cls = cls()
         cls.name = "DiscreteStateWeightDataset"
         cls.modes = ["main"]
@@ -38,7 +42,11 @@ class DiscreteDatasetConfig(Config):
 
 class ContinuousDatasetConfig(Config):
     @classmethod
-    def plain(cls):
+    def get(cls, weight_type="state", **kwargs):
+        return getattr(cls, weight_type)(**kwargs)
+
+    @classmethod
+    def plain(cls, **kwargs):
         cls = cls()
         cls.name = "ContinuousDataset"
         cls.modes = ["main"]
@@ -48,7 +56,7 @@ class ContinuousDatasetConfig(Config):
         return cls
 
     @classmethod
-    def structure(cls, use_strength=True):
+    def structure(cls, use_strength=True, **kwargs):
         cls = cls()
         cls.name = "ContinuousStructureWeightDataset"
         cls.modes = ["main"]
@@ -59,7 +67,9 @@ class ContinuousDatasetConfig(Config):
         return cls
 
     @classmethod
-    def state(cls, use_strength=True, compounded=False, reduce=False, total=True):
+    def state(
+        cls, use_strength=True, compounded=False, reduce=False, total=True, **kwargs
+    ):
         cls = cls()
         cls.name = "ContinuousStateWeightDataset"
         cls.modes = ["main"]
