@@ -2,6 +2,7 @@ import unittest
 import networkx as nx
 import numpy as np
 
+from templates import *
 from dynalearn.dynamics import GNNSEDynamics, GNNDEDynamics, GNNIncidenceDynamics
 from dynalearn.config import TrainableConfig, NetworkConfig
 from torch_geometric.nn.inits import ones
@@ -18,7 +19,7 @@ class GNNSEDynamicsTest(unittest.TestCase):
         self.num_nodes = 5
         self.num_states = self.config.num_states
         self.lag = self.config.lag
-        self.network = get_network(NetworkConfig.barabasialbert(self.num_nodes))
+        self.network = get_network(NetworkConfig.ba(self.num_nodes))
         self.predict_shape = (self.num_nodes, self.num_states)
         self.sample_shape = (self.num_nodes,)
 

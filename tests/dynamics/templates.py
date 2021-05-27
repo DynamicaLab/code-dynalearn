@@ -1,3 +1,13 @@
+import numpy as np
+import warnings
+import time
+
+warnings.filterwarnings("ignore")
+
+from dynalearn.config import NetworkConfig
+from dynalearn.networks.getter import get as get_network
+
+
 class StoContTemplateTest:
     def get_model(self):
         raise NotImplemented()
@@ -12,7 +22,7 @@ class StoContTemplateTest:
     def setUp(self):
         self.num_nodes = 100
         self.model = self.get_model()
-        self.network = get_network(NetworkConfig.barabasialbert(self.num_nodes, 2))
+        self.network = get_network(NetworkConfig.ba(self.num_nodes, 2))
         self.model.network = self.network.generate(int(time.time()))
 
     def test_change_network(self):

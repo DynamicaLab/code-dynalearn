@@ -1,11 +1,12 @@
 import unittest
 import numpy as np
 
-from dynalearn.dynamics import VARModel
+from templates import *
+from dynalearn.dynamics import VARDynamics
 from statsmodels.tsa.vector_ar.var_model import VAR
 
 
-class VARModelTest(unittest.TestCase):
+class VARDynamicsTest(unittest.TestCase):
     def setUp(self):
         self.num_states = 1
         self.num_nodes = 5
@@ -19,8 +20,8 @@ class VARModelTest(unittest.TestCase):
         dataset1 = self.get_data(with_y=False)
         dataset2 = self.get_data(with_y=True)
 
-        self.model1 = VARModel(self.num_states, lag=self.lag)
-        self.model2 = VARModel(self.num_states, lag=self.lag)
+        self.model1 = VARDynamics(self.num_states, lag=self.lag)
+        self.model2 = VARDynamics(self.num_states, lag=self.lag)
         self.model1.fit(dataset1)
         self.model2.fit(*dataset2)
         self.ref = VAR(dataset1).fit(maxlags=self.lag)

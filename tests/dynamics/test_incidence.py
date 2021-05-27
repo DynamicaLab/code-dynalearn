@@ -4,6 +4,7 @@ import torch
 import time
 import unittest
 
+from templates import *
 from dynalearn.dynamics import IncSIR
 from dynalearn.config import DynamicsConfig, NetworkConfig
 from dynalearn.networks.getter import get as get_network
@@ -15,7 +16,7 @@ class IncidenceSIRTest(unittest.TestCase):
         self.model = IncSIR(DynamicsConfig.incsir())
         self.num_states = self.model.num_states
         self.lag = self.model.lag
-        self.network = get_network(NetworkConfig.barabasialbert(self.num_nodes, 2))
+        self.network = get_network(NetworkConfig.ba(self.num_nodes, 2))
         self.model.network = self.network.generate(int(time.time()))
 
     def test_change_network(self):

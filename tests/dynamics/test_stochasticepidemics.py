@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 import time
 
-from templates import StoContTemplateTest
+from templates import *
 from dynalearn.dynamics import SIS, SIR, SISSIS, PlanckSIS
 from dynalearn.config import DynamicsConfig, NetworkConfig
 from dynalearn.networks.getter import get as get_network
