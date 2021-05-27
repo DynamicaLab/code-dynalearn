@@ -111,58 +111,6 @@ class ExperimentConfig(Config):
 
         return cls
 
-    # @classmethod
-    # def stocont(
-    #     cls,
-    #     name,
-    #     dynamics,
-    #     network,
-    #     path_to_data="./",
-    #     path_to_best="./",
-    #     path_to_summary="./",
-    #     seed=None,
-    # ):
-    #     cls = cls.default(
-    #         name,
-    #         dynamics,
-    #         network,
-    #         path_to_data=path_to_data,
-    #         path_to_best=path_to_best,
-    #         path_to_summary=path_to_summary,
-    #         seed=seed,
-    #     )
-    #     cls.dataset = DiscreteDatasetConfig.state()
-    #     cls.train_details = TrainingConfig.discrete()
-    #
-    #     return cls
-    #
-    # @classmethod
-    # def metapop(
-    #     cls,
-    #     name,
-    #     dynamics,
-    #     network,
-    #     path_to_data="./",
-    #     path_to_best="./",
-    #     path_to_summary="./",
-    #     seed=None,
-    # ):
-    #     cls = cls.default(
-    #         name,
-    #         dynamics,
-    #         network,
-    #         path_to_data=path_to_data,
-    #         path_to_best=path_to_best,
-    #         path_to_summary=path_to_summary,
-    #         seed=seed,
-    #     )
-    #     cls.dataset = ContinuousDatasetConfig.state(
-    #         compounded=False, reduce=False, total=True
-    #     )
-    #     cls.train_details = TrainingConfig.continuous()
-    #
-    #     return cls
-
     @classmethod
     def covid(
         cls,

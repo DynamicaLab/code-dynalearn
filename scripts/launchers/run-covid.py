@@ -4,31 +4,21 @@ import json
 from dynalearn.utilities import launch_scan
 
 name = "exp"
-specs = json.load(open("./specs.json", "r"))
+specs = json.load(open("./specs.json", "r"))["default"]
 config = {
     "name": name,
     "path_to_covid": specs["path_to_data"],
     "epochs": 200,
-<<<<<<< HEAD
-    "type": ["linear"],
-#    "model": ["DynamicsGATConv", "FullyConnectedGNN", "IndependentGNN"],
-    "model": ["KapoorConv"],
-    "lag": [7],
-    "bias": [0.],
-    "val_fraction": 0.3,
-=======
     "type": ["rnn"],
     "model": [
-        # "DynamicsGATConv",
-        # "FullyConnectedGNN",
-        # "IndependentGNN",
+        "DynamicsGATConv",
+        "FullyConnectedGNN",
+        "IndependentGNN",
         "KapoorConv",
     ],
     "lag": [5],
     "bias": [0.0, 0.25, 0.5, 0.75, 1.0],
     "val_fraction": 0.1,
->>>>>>> f92ba84c91530f60c34304f7dbbf7eb2d3a44c9e
-    "incidence": 1,
 }
 launch_scan(
     name,
