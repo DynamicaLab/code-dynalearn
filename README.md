@@ -15,3 +15,14 @@ Second, use pip to install the module.
 ```bash
 pip install ./code-dynalearn
 ```
+
+## Publications
+
+Please cite:
+
+_Deep learning of contagion dynamics on complex networks_<br>
+[Charles Murphy*](https://scholar.google.ca/citations?user=xgBmSD8AAAAJ&hl=en&oi=sra),
+[Edward Laurence*](https://edwardlaurence.me/),
+[Antoine Allard*](http://antoineallard.info),
+<br>
+[arXiv](https://arxiv.org/abs/1904.10814)
