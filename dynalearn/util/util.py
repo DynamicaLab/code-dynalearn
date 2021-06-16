@@ -2,7 +2,6 @@ import networkx as nx
 import numpy as np
 import torch
 
-from numba import jit
 from cmath import exp, log
 from math import log as mlog
 
@@ -61,26 +60,6 @@ def to_nary(x, base=2, dim=None):
 
 
 def all_combinations(n, k):
-    t = n
-    h = 0
-    a = [0] * k
-    a[0] = n
-    res = []
-    res.append(a.copy())
-    while a[k - 1] != n:
-        if t != 1:
-            h = 0
-        t = a[h]
-        a[h] = 0
-        a[0] = t - 1
-        a[h + 1] += 1
-        h += 1
-        res.append(a.copy())
-    return res
-
-
-@jit(nopython=True)
-def numba_all_combinations(n, k):
     t = n
     h = 0
     a = [0] * k

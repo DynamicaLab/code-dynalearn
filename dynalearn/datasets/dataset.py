@@ -25,7 +25,7 @@ from dynalearn.datasets.transforms.getter import get as get_transforms
 from dynalearn.util import get_node_attr, Verbose, LoggerDict
 
 
-class Dataset(object):
+class Dataset:
     def __init__(self, config=None, **kwargs):
         config = config or Config(**kwargs)
         self.config = config
