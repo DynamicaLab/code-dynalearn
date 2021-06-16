@@ -1,7 +1,7 @@
-from .config import *
-from .datasets import *
-from .dynamics import *
-from .experiments import *
-from .networks import *
-from .nn import *
-from .util import *
+import tests.config
+import tests.datasets
+import tests.dynamics
+import tests.experiments
+import tests.networks
+import tests.nn
+import tests.util

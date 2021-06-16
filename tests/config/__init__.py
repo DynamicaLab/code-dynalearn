@@ -1,6 +1,11 @@
-from .test_config import *
-from .test_dataset import *
-from .test_dynamics import *
-from .test_experiment import *
-from .test_networks import *
-from .test_trainable import *
+import tests.config.test_callback
+import tests.config.test_config
+import tests.config.test_dataset
+import tests.config.test_dynamics
+import tests.config.test_experiment
+import tests.config.test_metrics
+import tests.config.test_networks
+import tests.config.test_optimizer
+import tests.config.test_trainable
+import tests.config.test_training
+import tests.config.test_weights

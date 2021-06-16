@@ -1,7 +1,7 @@
-from .test_attention import *
-from .test_experiment import *
-from .test_forecast import *
-from .test_ltp import *
-from .test_pred import *
-from .test_stationary import *
-from .test_statistics import *
+import tests.experiments.test_attention
+import tests.experiments.test_experiment
+import tests.experiments.test_forecast
+import tests.experiments.test_ltp
+import tests.experiments.test_pred
+import tests.experiments.test_stationary
+import tests.experiments.test_statistics

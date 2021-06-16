@@ -1,8 +1,8 @@
-from .test_continuousdataset import *
-from .test_data import *
-from .test_discretedataset import *
-from .test_kde import *
-from .test_remap import *
-from .test_sampler import *
-from .test_threshold import *
-from .test_weightdata import *
+import tests.datasets.test_continuousdataset
+import tests.datasets.test_data
+import tests.datasets.test_discretedataset
+import tests.datasets.test_kde
+import tests.datasets.test_remap
+import tests.datasets.test_sampler
+import tests.datasets.test_threshold
+import tests.datasets.test_weightdata

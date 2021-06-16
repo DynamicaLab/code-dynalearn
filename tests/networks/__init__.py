@@ -1,4 +1,4 @@
-from .test_ba import *
-from .test_gnp import *
-from .test_multiplex import *
-from .test_network import *
+import tests.networks.test_ba
+import tests.networks.test_gnp
+import tests.networks.test_multiplex
+import tests.networks.test_network

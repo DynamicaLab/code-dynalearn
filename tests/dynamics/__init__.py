@@ -1,5 +1,5 @@
-from .test_deterministic import *
-from .test_incidence import *
-from .test_stochasticepidemics import *
-from .test_trainable import *
-from .test_var import *
+import tests.dynamics.test_deterministic
+import tests.dynamics.test_incidence
+import tests.dynamics.test_stochasticepidemics
+import tests.dynamics.test_trainable
+import tests.dynamics.test_var

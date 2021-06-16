@@ -1,4 +1,4 @@
-from .test_logger import *
-from .test_timelogger import *
-from .test_util import *
-from .test_verbose import *
+import tests.util.test_logger
+import tests.util.test_timelogger
+import tests.util.test_util
+import tests.util.test_verbose

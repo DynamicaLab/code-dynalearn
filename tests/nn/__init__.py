@@ -1,5 +1,5 @@
-from .test_gat import *
-from .test_gnn import *
-from .test_history import *
-from .test_normalizer import *
-from .test_propagator import *
+import tests.nn.test_gat
+import tests.nn.test_gnn
+import tests.nn.test_history
+import tests.nn.test_normalizer
+import tests.nn.test_propagator
