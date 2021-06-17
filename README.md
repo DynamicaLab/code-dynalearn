@@ -20,7 +20,8 @@ pip install ./code-dynalearn
 
 Please cite:
 
-_Deep learning of contagion dynamics on complex networks_<br>
+_Deep learning of contagion dynamics on complex networks_, arXiv:1904.10814.
+<br>
 [Charles Murphy*](https://scholar.google.ca/citations?user=xgBmSD8AAAAJ&hl=en&oi=sra),
 [Edward Laurence*](https://edwardlaurence.me/),
 [Antoine Allard*](http://antoineallard.info),
