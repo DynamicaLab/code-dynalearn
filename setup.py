@@ -3,7 +3,6 @@ from setuptools.extension import Extension
 import numpy as np
 
 extensions = []
-
 setup(
     name="dynalearn",
     version=1.0,
