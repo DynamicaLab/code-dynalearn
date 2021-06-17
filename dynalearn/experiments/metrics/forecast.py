@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from dynalearn.experiments.metrics import Metrics
 from dynalearn.util import Verbose
 from dynalearn.dynamics.trainable import VARDynamics
@@ -16,9 +15,8 @@ class ForecastMetrics(Metrics):
         elif not isinstance(self.num_steps, list):
             self.num_steps = list(self.num_steps)
 
-    @abstractmethod
     def get_model(self, experiment):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def initialize(self, experiment):
         return

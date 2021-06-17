@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from itertools import product
 from dynalearn.dynamics.dynamics import (
     Dynamics,
@@ -28,9 +27,8 @@ class IncidenceEpidemics(Dynamics):
         self.propagator = Propagator()
         Dynamics.__init__(self, config, 1)
 
-    @abstractmethod
     def predict(self, x):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def propagate(self, x):
         k = self.node_degree

@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from itertools import product
 from dynalearn.dynamics.dynamics import (
     Dynamics,
@@ -28,13 +27,11 @@ class DeterministicEpidemics(Dynamics):
         self.propagator = Propagator()
         Dynamics.__init__(self, config, num_states)
 
-    @abstractmethod
     def update(self, x):
-        raise NotImplemented()
+        raise NotImplementedError()
 
-    @abstractmethod
     def infection_rate(self, x):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def infection(self, x):
         infection = self.infection_rate(x).squeeze()

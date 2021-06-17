@@ -2,7 +2,6 @@ import networkx as nx
 import numpy as np
 import tqdm
 
-from abc import abstractmethod
 from .metrics import Metrics
 from itertools import product
 from scipy.special import binom

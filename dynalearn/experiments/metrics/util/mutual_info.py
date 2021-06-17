@@ -1,4 +1,5 @@
 import numpy as np
+
 from scipy.special import digamma
 from sklearn.neighbors import NearestNeighbors, KDTree
 

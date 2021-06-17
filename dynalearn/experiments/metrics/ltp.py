@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from itertools import product
 from random import sample
 from scipy.special import binom
@@ -25,11 +24,9 @@ class LTPMetrics(Metrics):
 
         self.names = ["summaries", "ltp", "train_ltp"]
 
-    @abstractmethod
     def get_model(self, experiment):
         raise NotImplementedError()
 
-    @abstractmethod
     def predict(self, real_x, obs_x, real_y, obs_y):
         raise NotImplementedError()
 

@@ -1,6 +1,5 @@
 import numpy as np
 
-from abc import abstractmethod, ABC
 from scipy.signal import savgol_filter
 from dynalearn.util import from_nary
 
@@ -9,13 +8,11 @@ class ModelSampler(ABC):
     def __init__(self, config):
         self.config = config
 
-    @abstractmethod
     def __call__(self, mode, initializer, statistics):
-        raise NotImplemented
+        raise NotImplementedError()
 
-    @abstractmethod
     def aggregate(self, x):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def setUp(self, metrics):
         self.dynamics = metrics.dynamics

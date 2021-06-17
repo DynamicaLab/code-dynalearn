@@ -1,4 +1,5 @@
 import numpy as np
+
 from scipy.stats import poisson
 from scipy.optimize import fsolve
 

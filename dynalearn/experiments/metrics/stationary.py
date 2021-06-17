@@ -1,6 +1,5 @@
 import numpy as np
 
-from abc import abstractmethod
 from random import sample
 from dynalearn.util import poisson_distribution
 from dynalearn.networks import ConfigurationNetworkGenerator, GNMNetworkGenerator
@@ -23,7 +22,6 @@ class StationaryStateMetrics(Metrics):
         self.networks = None
         self.model = None
 
-    @abstractmethod
     def get_model(self, experiment):
         raise NotImplementedError()
 
