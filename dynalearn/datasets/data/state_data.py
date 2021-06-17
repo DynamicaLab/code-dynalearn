@@ -1,6 +1,5 @@
 import h5py
 import numpy as np
-from abc import ABC, abstractmethod
 
 from dynalearn.datasets.data.data import Data
 

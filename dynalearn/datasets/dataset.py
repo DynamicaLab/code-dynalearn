@@ -4,7 +4,6 @@ import networkx as nx
 import numpy as np
 import tqdm
 
-from abc import abstractmethod
 from itertools import islice, chain
 from .sampler import Sampler
 from scipy.stats import gaussian_kde
@@ -48,9 +47,8 @@ class Dataset:
         self._indices = None
         self._rev_indices = None
 
-    @abstractmethod
     def __getitem__(self, index):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __len__(self):
         return np.sum([s.size for s in self.data["inputs"].data_list])

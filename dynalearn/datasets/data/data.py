@@ -1,9 +1,8 @@
 import h5py
 import numpy as np
-from abc import ABC, abstractmethod
 
 
-class Data(ABC):
+class Data:
     def __init__(self, name="data"):
         self.name = name
         self._data = None
@@ -18,10 +17,6 @@ class Data(ABC):
         data_copy.__dict__ = self.__dict__.copy()
         data_copy.data = self._data.copy()
         return data_copy
-
-    # def transform(self, transformation):
-    #     self.data = transformation(self.data)
-    #     return self.data
 
     def get(self):
         return self.data
@@ -102,10 +97,6 @@ class DataCollection:
             for k, v in group.items():
                 d = self.template(v)
                 self.add(d)
-
-    # def transform(self, transformation):
-    #     for i, x in enumerate(self.data_list):
-    #         self.data_list[i] = transformation(x)
 
     @property
     def size(self):

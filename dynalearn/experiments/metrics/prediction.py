@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from random import sample
 from .metrics import Metrics
 from dynalearn.networks import Network, MultiplexNetwork

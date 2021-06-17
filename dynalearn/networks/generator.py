@@ -1,11 +1,10 @@
 import numpy as np
 import networkx as nx
 
-from abc import ABC, abstractmethod
 from dynalearn.config import Config
 
 
-class NetworkGenerator(ABC):
+class NetworkGenerator:
     def __init__(self, config=None):
         config = config or Config()
         self._config = config
@@ -21,9 +20,8 @@ class NetworkGenerator(ABC):
         else:
             self.layers = None
 
-    @abstractmethod
     def generate(self, seed):
-        raise NotImplemented
+        raise NotImplementedError()
 
     @property
     def config(self):

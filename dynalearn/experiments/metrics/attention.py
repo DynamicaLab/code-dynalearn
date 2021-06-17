@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from functools import partial
 from sklearn.feature_selection import mutual_info_regression
 from dynalearn.experiments.metrics import Metrics

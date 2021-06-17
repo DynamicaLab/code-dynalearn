@@ -1,7 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod
 from dynalearn.config import Config
 from dynalearn.datasets.data import Data, StateData, NetworkData
 
@@ -16,9 +15,8 @@ class Transform:
     def setup(self, experiment):
         return
 
-    @abstractmethod
     def __call__(self, x):
-        raise NotImplemented()
+        raise NotImplementedError()
 
 
 class TransformList(Transform):
@@ -39,9 +37,8 @@ class TransformList(Transform):
 
 
 class StateTransform(Transform):
-    @abstractmethod
     def _transform_state_(self, x):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __call__(self, x):
         if not issubclass(type(x), StateData):
@@ -53,9 +50,8 @@ class StateTransform(Transform):
 
 
 class NetworkTransform(Transform):
-    @abstractmethod
     def _transform_network_(self, g):
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __call__(self, x):
         if not issubclass(type(x), NetworkData):

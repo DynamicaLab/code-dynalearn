@@ -2,11 +2,10 @@ import h5py
 import numpy as np
 import tqdm
 
-from abc import ABC, abstractmethod
 from dynalearn.util import Verbose
 
 
-class Metrics(ABC):
+class Metrics:
     def __init__(self, config):
         self.config = config
         self.data = {}
@@ -14,9 +13,8 @@ class Metrics(ABC):
         self.get_data = {}
         self.num_updates = 0
 
-    @abstractmethod
     def initialize(self, experiment):
-        raise NotImplementedError("initialize must be implemented.")
+        raise NotImplementedError()
 
     def exit(self, experiment):
         return

@@ -1,17 +1,15 @@
 import networkx as nx
 import numpy as np
 
-from abc import abstractmethod, ABC
 from dynalearn.config import Config
 
 
-class WeightGenerator(ABC):
+class WeightGenerator:
     def __init__(self, config=None, **kwargs):
         config = config or Config(**kwargs)
 
-    @abstractmethod
     def generate(self, u, v):
-        raise NotImplemented
+        raise NotImplementedError()
 
     def setUp(self, g):
         return
