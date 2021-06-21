@@ -1,6 +1,8 @@
 # code-dynalearn
 Deep learning of contagion dynamics on complex networks in pytorch
 
+[![DOI](https://zenodo.org/badge/371061340.svg)](https://zenodo.org/badge/latestdoi/371061340)
+
 ## Requirements and dependencies
 
 * `torch>=1.6.0`
