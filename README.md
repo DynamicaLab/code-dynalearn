@@ -22,13 +22,11 @@ pip install ./code-dynalearn
 
 Please cite:
 
-_Deep learning of contagion dynamics on complex networks_, arXiv:1904.10814.
-<br>
-[Charles Murphy*](https://scholar.google.ca/citations?user=xgBmSD8AAAAJ&hl=en&oi=sra),
-[Edward Laurence*](https://edwardlaurence.me/),
-[Antoine Allard*](http://antoineallard.info),
-<br>
-[arXiv](https://arxiv.org/abs/1904.10814)
+_Deep learning of contagion dynamics on complex networks_<br>
+[Charles Murphy](https://scholar.google.ca/citations?user=xgBmSD8AAAAJ&hl=en&oi=sra),
+[Edward Laurence](https://edwardlaurence.me/) and
+[Antoine Allard](http://antoineallard.info),<br>
+[Nature Communications 12, 4720 (2021)](https://doi.org/10.1038/s41467-021-24732-2)
 
 ## How to use the code
 This Python module defines different classes for the purpose of learning dynamics on networks, such as `Experiment`, `Config`, `Metrics`, `Dynamics`, `Model`, `Network` and `Dataset`. We review these classes and show how to use them in this section.
