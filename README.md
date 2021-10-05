@@ -35,7 +35,7 @@ This Python module defines different classes for the purpose of learning dynamic
 ### Reproduce the data from the paper
 The scripts to re-run all the experiments presented in the papers are [here](./scripts/launchers). To run a script, for instance the script [run-synthetic-discrete.py](./scripts/launchers/run-synthetic-discrete.py) that generates the data for Figs. 2, 3 and 4 for the simple, complex and interaction dynamics, simply run the following command:
 ```bash
-    python run-synthetic-discrete.py
+python run-synthetic-discrete.py
 ```
 
 To remake the figures, we refer to these [notebooks](./notebooks/figures).
@@ -49,18 +49,18 @@ The `Dynamics` class is a virtual class, which can only be used to define subcla
 
 To define a `Dynamics` subclass object, such as a `SIS` object for example, one can procede in this way
 ```python
-    config = dynalearn.config.DynamicsConfig.sis()
-    dynamics = dynalearn.dynamics.SIS(config=config)
-    dynamics = dynalearn.dynamics.SIS(infection=0.5, recovery=0.5)
+config = dynalearn.config.DynamicsConfig.sis()
+dynamics = dynalearn.dynamics.SIS(config=config)
+dynamics = dynalearn.dynamics.SIS(infection=0.5, recovery=0.5)
 ```
 
 To run the dynamics a specific network, simply pass a `Network` object to it:
 ```python
-    dynamics.network = Network(data=nx.gnp_random_graph(100, 0.1))
-    x0 = dynamics.initial_state()
-    x = [x0]
-    for t in range(10):
-        x.append(dynamics.sample(x[-1]))
+dynamics.network = dynalearn.networks.Network(data=nx.gnp_random_graph(100, 0.1))
+x0 = dynamics.initial_state()
+x = [x0]
+for t in range(10):
+    x.append(dynamics.sample(x[-1]))
 ```
 
 The graph neural network models are also defined as `Dynamics`, as an overhead of the `Model` class.
@@ -70,7 +70,7 @@ To construct a `Dynamics` objects, one can either give the parameters of the mod
 #### `Network` class
 The `Network` class is an overhead of the `nx.Graph` class in _networkx_. It contains a `nx.Graph` in the attribute `data`, and defines and computes automatically the attributes as needed, such as node / edge attributes, and the edge list. To define a `Network` object, use
 ```python
-    g = dynalearn.networks.Network(data=nx.Graph())
+g = dynalearn.networks.Network(data=nx.Graph())
 ```
 
 The `NetworkGenerator` class generates network using the method `generate(self, seed=None)` and returns `Network` object.
@@ -91,14 +91,14 @@ We define a general `GraphNeuralNetwork` class that inherits from the `Model` cl
 #### `Dataset` class
 The `Dataset` class manages the dynamics and network models in order to generate datasets and split it into training, validation and / or test datasets. It also manages a `Sampler` and a `Weight` objects for the importance sampling procedure used in the paper. To define a `Dataset` subclass, one must pass `DatasetConfig` object:
 ```python
-    config = dynalearn.config.DiscreteDatasetConfig.plain()
-    dataset = dynalearn.dataset.DiscreteDataset(config)
+config = dynalearn.config.DiscreteDatasetConfig.plain()
+dataset = dynalearn.dataset.DiscreteDataset(config)
 ```
 
 To generate some data and split it, one needs to pass in inputs the `Experiment` object as follows:
 ```python
-    dataset.generate(exp)
-    val_dataset = dataset.partition(type="random", fraction=0.5)
+dataset.generate(exp)
+val_dataset = dataset.partition(type="random", fraction=0.5)
 ```
 
 This generates another `Dataset` subclass object with half of the data contained in `dataset` selected at random.
@@ -113,13 +113,13 @@ The role of an `Experiment` object is to manage all the other objects, that is, 
 
 To define an `Experiment` object, one passes a `Config` object (see below) in input to the experiment as follows:
 ```python
-    config = dynalearn.config.ExperimentConfig.default("exp-name", "sis", "gnp")
-    exp = dynalearn.experiments.Experiment(config, verbose=0)
+config = dynalearn.config.ExperimentConfig.default("exp-name", "sis", "gnp")
+exp = dynalearn.experiments.Experiment(config, verbose=0)
 ```
 
 At this point, the `exp` object can be used to run a complete experiment, by running the `run` method:
 ```python
-    exp.run(tasks=None)
+exp.run(tasks=None)
 ```
 
 The `run` method takes in input the set of tasks one wants to perform, represented as a `str`, a list of `str` or `None` (where it runs all the tasks). All the available tasks are contains in the `__tasks__` attribute of `exp`, which include data generation, training, saving, loading, etc..
@@ -130,15 +130,15 @@ A `Config` object contains all the information needed to define an `Experiment` 
 
 To define a `Config` object, procede in this way:
 ```python
-    config = dynalearn.config.Config()
+config = dynalearn.config.Config()
 ```
 
 Then, one can add any attributes to the `Config` object. For instance, assume that we want to define a `Config` object for a random graph, such as G(N, p). Then, we might want the `Config` to contain _N_, the number of nodes, _p_, the connection probability, and the name of the network model:
 ```python
-    network_config = Config()
-    network_config.name = "G(N, p)"
-    network_config.N = 100
-    network_config.p = 0.1
+network_config = Config()
+network_config.name = "G(N, p)"
+network_config.N = 100
+network_config.p = 0.1
 ```
 
 A `Config` object can be displayed using `print(network_config)`, and can be represented by a dictionary with the attribute `network_config.state_dict`. It is also possible to give another `Config` object as a parameter of `network_config`. In the `state_dict` attribute, the `Config` hierarchy is encoded using `/`. This is an effective way of defining a `Config` object for an `Experiment`.
