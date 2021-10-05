@@ -8,31 +8,4 @@
         "command": "bash",
         "device": "cpu"
     },
-    "hector":{
-        "path_to_data": "/home/charles_murphy/Documents/ulaval/doctorat/projects/data/midynet/",
-        "path_to_script": "/home/charles_murphy/Documents/ulaval/doctorat/projects/codes/midynet/scripts/sources",
-        "modules_to_load": [],
-        "source_path": "./",
-        "account": "",
-        "command": "bash",
-        "device": "cpu"
-    },
-    "beluga":{
-        "path_to_data": "/home/murphy9/projects/def-aallard/murphy9/data/midynet-data/",
-        "path_to_script": "/home/murphy9/codes/midynet/scripts/sources",
-        "modules_to_load": ["StdEnv/2020", "gcc/9", "python/3.8", "graph-tool"],
-        "source_path": "/home/murphy9/.midynet-env/bin/activate",
-        "account": "def-aallard",
-        "command": "sbatch",
-        "device": "cpu"
-    },
-    "graham":{
-        "path_to_data": "/home/murphy9/projects/def-aallard/murphy9/data/midynet-data/",
-        "path_to_script": "/home/murphy9/codes/midynet/scripts/sources",
-        "modules_to_load": ["StdEnv/2020", "gcc/9", "python/3.8", "graph-tool"],
-        "source_path": "/home/murphy9/.midynet-env/bin/activate",
-        "account": "def-aallard",
-        "command": "sbatch",
-        "device": "cpu"
-    }
 }

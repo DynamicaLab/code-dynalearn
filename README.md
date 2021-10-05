@@ -32,15 +32,27 @@ _Deep learning of contagion dynamics on complex networks_<br>
 This Python module defines different classes for the purpose of learning dynamics on networks, such as `Experiment`, `Config`, `Metrics`, `Dynamics`, `Model`, `Network` and `Dataset`. We review these classes and show how to use them in this section.
 
 
+### Reproduce the data from the paper
+The scripts to re-run all the experiments presented in the papers are [here](./scripts/launchers). To run a script, for instance the script [run-synthetic-discrete.py](./scripts/launchers/run-synthetic-discrete.py) that generates the data for Figs. 2, 3 and 4 for the simple, complex and interaction dynamics, simply run the following command:
+```bash
+    python run-synthetic-discrete.py
+```
+
+To remake the figures, we refer to these [notebooks](.notebooks/figures).
+
 ### Building blocks
 The building blocks of this modules include classes for dynamical models (`Dynamics`), neural network models (`Model`), graph / network models (`Network`) and dataset managers (`Dataset`).
 
 
 #### `Dynamics` class
-The `Dynamics` class is a virtual class, which can only be used to define subclasses. To define a subclass of `Dynamics`, one needs to define the method `inital_state(self)`, which returns an initial state, `predict(self, x)`, which compute the local transition probability given the current state x, `loglikelihood(self, x)`, which compute the probability of generate the time series x, `sample(self, x)`, which sample a next state given x using the transition probability, and `is_dead(self, x)`, which determines if the state x has reached a fixed point. A `Dynamics` subclass must provide the number of available local states.
+The `Dynamics` class is a virtual class, which can only be used to define subclasses. To define a subclass of `Dynamics`, one needs to define the `inital_state(self)` method, which returns an initial state, the `predict(self, x)` method, which computes the local transition probabilities of each node into a `np.array` given the current state x, the `loglikelihood(self, x)` method, which computes the log-probability of generating the time series _x_, the `sample(self, x)` method, which samples a next state given _x_ using the transition probabilities, and the `is_dead(self, x)` method, which determines if the state _x_ has reached a fixed point.
 
-To define `Dynamics` subclass, such as `SIS` for example, one can procede in this way
+To define a `Dynamics` subclass object, such as a `SIS` object for example, one can procede in this way
+```python
+    config = dynalearn.config.DynamicsConfig.sis()
+    dynamics = dynalearn.dynamics.SIS(config=config)
     dynamics = dynalearn.dynamics.SIS(infection=0.5, recovery=0.5)
+```
 
 To run the dynamics a specific network, simply pass a `Network` object to it:
 ```python
@@ -53,30 +65,31 @@ To run the dynamics a specific network, simply pass a `Network` object to it:
 
 The graph neural network models are also defined as `Dynamics`, as an overhead of the `Model` class.
 
+To construct a `Dynamics` objects, one can either give the parameters of the model in keywords, or pass a `DynamicsConfig` object. If some parameters are not defined, an error will be raised.
 
 #### `Network` class
-The `Network` class is an overhead of the `nx.Graph` class in _networkx_. It contains a `nx.Graph` in the attribute `data`, and defines and compute automatically the attributes needed in the context of learning dynamics on network, such as node / edge attributes, and the edge list. To define a `Network` object, use
+The `Network` class is an overhead of the `nx.Graph` class in _networkx_. It contains a `nx.Graph` in the attribute `data`, and defines and computes automatically the attributes as needed, such as node / edge attributes, and the edge list. To define a `Network` object, use
 ```python
     g = Network(data=nx.Graph())
 ```
 
-The `NetworkGenerator` class generates network using the method `generate(self, seed=None)` and return `Network` object.
+The `NetworkGenerator` class generates network using the method `generate(self, seed=None)` and returns `Network` object.
 
 The `WeightGenerator` class generates edge weights for a network by using the magic method `__call__(self, g)`.
 
-The `NetworkTransform` class apply transformations (e.g., removing a fraction _p_ of the edges randomly) to a network using the magic method `__call__(self, g)`.
+The `NetworkTransform` class applies a transformation (e.g., removing a fraction _p_ of the edges randomly) to a network using the magic method `__call__(self, g)`.
 
 To construct any of these objects, one can either give the parameters of the model in keywords, or pass a `NetworkConfig` object. One can also construct easily a `NetworkGenerator` object using the `dynalearn.networks.getter.get(config)` function, which also takes a `NetworkConfig` object.
 
 
 #### `Model` class
-The `Model` class is subclass of the `nn.Module` class in _pytorch_, which is also virtual. To define a subclass of `Model`, one needs to define the `forward(self, x, g)` method and the `loss(self, y_true, y_pred)` method. A `Model` subclass work similarly to how _keras_ models work, i.e., where a `fit` method is defined to train the model. A model can also save / load its weights easily.
+The `Model` class is subclass of the `nn.Module` class in _pytorch_, which is also virtual. To define a subclass of `Model`, one needs to define the `forward(self, x, net_attr)` method, which takes a state _x_ and a network attributes tuple _net_attr_ containing the node / edge attributes and the edge list, and the `loss(self, y_true, y_pred)` method. A `Model` subclass works similarly to how _keras_ models work, i.e., where a `fit` method is used to train the model. A model can also save / load its weights easily.
 
 We define a general `GraphNeuralNetwork` class that inherits from the `Model` class, which is also an overhead for the _torch_geometric_ layers and the `DynamicsGATConv` layer designed in the paper.
 
 
 #### `Dataset` class
-The `Dataset` class manages the dynamics and network models in order to generate datasets and split it into training, validation and test datasets. It also manages a `Sampler` and a `Weight` objects for for the importance sampling procedure used in the paper. To define a `Dataset` subclass, one must pass `DatasetConfig` object:
+The `Dataset` class manages the dynamics and network models in order to generate datasets and split it into training, validation and / or test datasets. It also manages a `Sampler` and a `Weight` objects for the importance sampling procedure used in the paper. To define a `Dataset` subclass, one must pass `DatasetConfig` object:
 ```python
     config = dynalearn.config.DiscreteDatasetConfig.plain()
     dataset = dynalearn.dataset.DiscreteDataset(config)
