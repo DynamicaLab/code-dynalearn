@@ -38,7 +38,7 @@ The scripts to re-run all the experiments presented in the papers are [here](./s
     python run-synthetic-discrete.py
 ```
 
-To remake the figures, we refer to these [notebooks](.notebooks/figures).
+To remake the figures, we refer to these [notebooks](./notebooks/figures).
 
 ### Building blocks
 The building blocks of this modules include classes for dynamical models (`Dynamics`), neural network models (`Model`), graph / network models (`Network`) and dataset managers (`Dataset`).
