@@ -70,7 +70,7 @@ To construct a `Dynamics` objects, one can either give the parameters of the mod
 #### `Network` class
 The `Network` class is an overhead of the `nx.Graph` class in _networkx_. It contains a `nx.Graph` in the attribute `data`, and defines and computes automatically the attributes as needed, such as node / edge attributes, and the edge list. To define a `Network` object, use
 ```python
-    g = Network(data=nx.Graph())
+    g = dynalearn.networks.Network(data=nx.Graph())
 ```
 
 The `NetworkGenerator` class generates network using the method `generate(self, seed=None)` and returns `Network` object.
