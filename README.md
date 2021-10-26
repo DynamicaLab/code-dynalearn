@@ -40,7 +40,7 @@ python run-synthetic-discrete.py
 
 To remake the figures, we refer to these [notebooks](./notebooks/figures).
 
-To reproduce the COVID-19 experiment, run the script [run-covid.py](./scripts/figure-6/run-covid.py). Note that, prior to running this script, a datafile containing the incidence data must be downloaded. In the [script](./scripts/sources/run-covid.py), it is assumed that the name of this datafile is _spain-covid19cases.h5_, which is in the HDF5 format. To download it, we refer to
+To reproduce the COVID-19 experiment, run the script [run-covid.py](./scripts/figure-6/run-covid.py). Note that, prior to running this script, a datafile containing the incidence data must be downloaded. In this runner [script](./scripts/sources/run-covid.py), it is assumed that the name of this datafile is _spain-covid19cases.h5_, which is in the HDF5 format. To download it, we refer to
 the [data-dynalearn](https://github.com/DynamicaLab/data-dynalearn) repository.
 
 ### Building blocks
