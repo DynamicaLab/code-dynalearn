@@ -33,12 +33,15 @@ This Python module defines different classes for the purpose of learning dynamic
 
 
 ### Reproduce the data from the paper
-The scripts to re-run all the experiments presented in the papers are [here](./scripts/launchers). To run a script, for instance the script [run-synthetic-discrete.py](./scripts/launchers/run-synthetic-discrete.py) that generates the data for Figs. 2, 3 and 4 for the simple, complex and interaction dynamics, simply run the following command:
+The scripts to re-run all the experiments presented in the papers are [here](./scripts/launchers). To run a script, for instance the script [run-synthetic-discrete.py](./scripts/figures-234/run-synthetic-discrete.py) that generates the data for Figs. 2, 3 and 4 for the simple, complex and interaction dynamics, simply run the following command:
 ```bash
 python run-synthetic-discrete.py
 ```
 
 To remake the figures, we refer to these [notebooks](./notebooks/figures).
+
+To reproduce the COVID-19 experiment, run the script [run-covid.py](./scripts/figure-6/run-covid.py). Note that, prior to running this script, a datafile containing the incidence data must be downloaded. In the [script](./scripts/sources/run-covid.py), it is assumed that the name of this datafile is _spain-covid19cases.h5_, which is in the HDF5 format. To download it, we refer to
+the [data-dynalearn](https://github.com/DynamicaLab/data-dynalearn) repository.
 
 ### Building blocks
 The building blocks of this modules include classes for dynamical models (`Dynamics`), neural network models (`Model`), graph / network models (`Network`) and dataset managers (`Dataset`).
