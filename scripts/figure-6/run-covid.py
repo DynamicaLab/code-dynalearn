@@ -1,7 +1,11 @@
 import os
 import json
 
-from dynalearn.utilities import launch_scan
+sys.path.append("../sources")
+
+from script import launch_scan
+
+sys.path.append("../figure-6")
 
 name = "exp"
 specs = json.load(open("./specs.json", "r"))["default"]
@@ -23,7 +27,7 @@ config = {
 launch_scan(
     name,
     os.path.join(specs["path_to_data"], "covid"),
-    os.path.join(specs["path_to_script"], "covid_script.py"),
+    "../sources/run-covid.py",
     command=specs["command"],
     time="15:00:00",
     memory="8G",

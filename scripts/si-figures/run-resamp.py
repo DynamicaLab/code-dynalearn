@@ -6,7 +6,7 @@ import sys
 sys.path.append("../sources")
 from script import launch_scan
 
-sys.path.append("../launchers")
+sys.path.append("../si-figures")
 
 specs = json.load(open("../sources/specs.json", "r"))["default"]
 
@@ -14,8 +14,8 @@ specs = json.load(open("../sources/specs.json", "r"))["default"]
 def launching(config):
     launch_scan(
         name,
-        os.path.join(specs["path_to_data"], "bias"),
-        os.path.join(specs["path_to_script"], "run.py"),
+        os.path.join(specs["path_to_data"], "resamp"),
+        "../sources/run.py",
         command=specs["command"],
         time="12:00:00",
         memory="8G",
@@ -41,11 +41,11 @@ config = {
     "metrics": ("ltp"),
     "to_zip": ("config.pickle", "metrics.h5"),
     "train_details/num_samples": 10000,
-    "train_details/use_groundtruth": [0, 1],
-    "train_details/resampling": 2,
+    "train_details/use_groundtruth": 0,
+    "train_details/resampling": np.logspace(0, 4, 5).astype("int").tolist(),
     "train_details/val_bias": 0.5,
     "train_details/val_fraction": 0.01,
-    "train_details/train_bias": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "train_details/train_bias": 0.5,
     "train_details/epochs": 60,
     "networks/num_nodes": 1000,
     "weight_type": "state",
